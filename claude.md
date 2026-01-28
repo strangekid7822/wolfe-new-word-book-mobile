@@ -1,9 +1,18 @@
 # React Native Migration Progress
 
-## Original Web Version
-Original codebase location: `/Users/zhaoqiang/Coding/wolfe-new-word-book`
+## 🎯 Goal
+Migrate the complete web application from `/Users/zhaoqiang/Coding/wolfe-new-word-book` to React Native mobile app.
 
-## Completed
+## 📱 Current Status: BASIC APP WORKING ✅
+The app now runs successfully on mobile! You can:
+- Enter phone number on welcome screen
+- Navigate between screens
+- See words loaded from vocabulary library
+- Basic UI is functional
+
+**GitHub Repository**: https://github.com/strangekid7822/wolfe-new-word-book-mobile
+
+## ✅ What's Been Completed (Phase 1)
 
 ### Setup
 - Expo React Native project initialized with blank template
@@ -72,29 +81,119 @@ The web Home.jsx has a complex conversation flow with:
 
 Current mobile Home is just buttons. To match web, migrate all home components.
 
-## Fixed Issues (2026-01-29)
+---
+
+## 🚀 Next Steps: Complete the Migration
+
+### Phase 2: WordTest Screen - Make it Interactive!
+**Goal**: Make the word learning screen work like the web version
+
+**What needs to be done:**
+
+1. **Add Spelling Input Boxes** (Priority: HIGH)
+   - Web version: `src/components/WordTestCardGallery/SpellingInputs.jsx`
+   - Mobile needs: Letter-by-letter input boxes where user types the word
+   - How: Use React Native `TextInput` components in a row
+
+2. **Make Options Clickable** (Priority: HIGH)
+   - Web version: `src/components/WordTestCardGallery/OptionsSection.jsx`
+   - Mobile needs: User can tap an option to select the correct meaning
+   - How: Add `onPress` handlers to show if answer is correct/wrong
+
+3. **Add Results Feedback** (Priority: HIGH)
+   - Web version: `src/components/WordTestCardGallery/ResultCard.jsx`
+   - Mobile needs: Show green checkmark ✓ or red X when user answers
+   - How: Create a result modal/overlay component
+
+4. **Add Card Swiping** (Priority: MEDIUM)
+   - Web version: `src/components/WordTestCardGallery/WordTestCardGallery.jsx`
+   - Mobile needs: Swipe left/right to go to next word
+   - How: Use React Native FlatList with horizontal scrolling
+
+5. **Add Audio Pronunciation** (Priority: MEDIUM)
+   - Web version: `src/components/WordTestCardGallery/AudioPlayButton.jsx`
+   - Mobile needs: Tap speaker icon to hear word pronunciation
+   - How: Wire up expo-speech (already installed)
+
+6. **Add Confetti Celebration** (Priority: LOW)
+   - Web version: Uses react-confetti
+   - Mobile needs: Show confetti when user gets answer right
+   - How: Install and use react-native-confetti-cannon
+
+### Phase 3: Home Screen - Conversation Flow
+**Goal**: Replace simple buttons with the conversational chat UI like web version
+
+**What needs to be done:**
+
+1. **Conversational Chat Interface** (Priority: HIGH)
+   - Web version: `src/pages/Home.jsx` with complex flow
+   - Components to migrate:
+     - MessageBubble - Chat messages from Wolfe
+     - TypingIndicator - Animated "..." while Wolfe is "thinking"
+     - ChatInput - Text input at bottom
+     - OptionChips - Tappable button options
+   - How: Build scrollable chat view with React Native ScrollView
+
+2. **Book Selection Gallery** (Priority: HIGH)
+   - Web version: `src/components/Home/BookGallery.jsx`
+   - Mobile needs: Horizontal scrollable gallery of textbook covers
+   - How: Use FlatList with horizontal scroll
+
+3. **Unit Selection Picker** (Priority: MEDIUM)
+   - Web version: `src/components/Home/ScrollPicker.jsx`
+   - Mobile needs: Scrollable wheel picker to select unit
+   - How: Use React Native Picker or custom scroll component
+
+4. **Avatar Upload** (Priority: LOW)
+   - Web version: `src/components/Home/AvatarUploader.jsx`
+   - Mobile needs: Take photo or choose from gallery
+   - How: Use expo-image-picker
+
+### Phase 4: Profile & Stats
+**Goal**: Show real learning statistics
+
+**What needs to be done:**
+
+1. **Save Learning Progress** (Priority: HIGH)
+   - Track: words learned, correct/wrong answers, study time
+   - How: Save to AsyncStorage after each question
+
+2. **Display Stats** (Priority: HIGH)
+   - Show: accuracy percentage, words mastered, streak days
+   - How: Read from AsyncStorage and display
+
+3. **Leaderboard** (Priority: LOW)
+   - Web version: Uses leaderboardService
+   - Mobile needs: Show ranking among users
+   - How: Already migrated leaderboardService, just need UI
+
+---
+
+## 🔧 Technical Fixes Completed (2026-01-29)
+
 ### Configuration Fixes
 - ✅ Added missing `babel-preset-expo` package
 - ✅ Created proper `metro.config.js` with Expo defaults
 - ✅ Fixed Babel configuration (removed incompatible NativeWind plugin)
+- ✅ Downgraded react-native-screens to ~4.16.0 for compatibility
+- ✅ Disabled React Native new architecture (caused type errors)
 
 ### Styling Migration
-- ✅ **Converted all screens from NativeWind className to React Native StyleSheet**
-  - NativeWind v4 had compatibility issues with the current setup
-  - All screens now use standard React Native `StyleSheet.create()`
-  - Maintained the same visual design with Tailwind color equivalents
-  - Files converted:
-    - `WelcomeScreen.jsx` - Phone input onboarding
-    - `HomeScreen.jsx` - Dashboard with navigation buttons
-    - `WordTestScreen.jsx` - Word practice interface
-    - `ProfileScreen.jsx` - Stats display page
-- ✅ Removed global.css import from App.js
-- ✅ Simplified metro.config.js (no longer using NativeWind)
+- ✅ **Converted all screens from NativeWind to React Native StyleSheet**
+  - NativeWind v4 had compatibility issues
+  - All screens now use standard `StyleSheet.create()`
+  - Files converted: WelcomeScreen, HomeScreen, WordTestScreen, ProfileScreen
+- ✅ Removed global.css import
+- ✅ Simplified metro.config.js
 
-### Warnings (Non-critical)
-- ⚠️ react-native-screens@4.20.0 should be ~4.16.0 for best Expo compatibility
+### Repository
+- ✅ Pushed to GitHub: <https://github.com/strangekid7822/wolfe-new-word-book-mobile>
 
-## Known Issues
-- Library JSON files are bundled (all ~9 files), may increase app size
-- No error handling for AsyncStorage failures
-- No loading states for most screens
+---
+
+## 📝 Notes for Next Development Session
+
+- Original web code is at: `/Users/zhaoqiang/Coding/wolfe-new-word-book`
+- Use that as reference when building new features
+- All services (question, audio, leaderboard) are already migrated and working
+- Focus on UI components next - start with WordTest interactivity
